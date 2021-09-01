@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/fragment :: head">
+
+</head>
+<body th:object="${myProfile}">
+<div  >
+	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+
+		</div><!-- /.container-fluid -->
+	</nav>
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" >
+		<div class="profile-sidebar">
+
+			<div class="profile-usertitle">
+				<div class="profile-usertitle-name" th:text="${myProfile.firstName}+' '+ ${myProfile.lastName}">LeaveApp</div>
+
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="divider"></div>
+
+
+		<ul class="nav menu">
+
+			<li>
+				<div>
+				<em class="fa fa-home"></em>
+				<a href="/home">Home</a>
+				</div>
+
+			</li>
+		</ul>
+	</div>
+
+</div>
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+		<div class="blog-entry align-self-stretch">
+
+			<div class="text p-4">
+				<h5 class="page-header" th:text="'First Name: '+ *{firstName}" ></h5>
+				<h5 class="page-header" th:text="'Last Name: '+*{lastName}" ></h5>
+				<h5 class="page-header" th:text="'Email: '+*{email}" ></h5>
+				<h5 class="page-header" th:text="'Job Position: '+*{jobPosition}" ></h5>
+				<h5 class="page-header" th:text="'Date Of Appointment: '+*{dateOfAppointment}" ></h5>
+				<h5 class="page-header" th:text="'Total Days Leave: '+*{totalDaysLeave}+' days'" ></h5>
+			</div>
+
+		</div><!--/.row-->
+		
+
+		<div class="row">
+			<div class="col-md-12">
+
+			</div>
+		</div><!--/.row-->
+		
+
+		
+
+	</div>	<!--/.main-->
+	
+	<script src="/js/jquery-1.11.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/chart.min.js"></script>
+	<script src="/js/chart-data.js"></script>
+	<script src="/js/easypiechart.js"></script>
+	<script src="/js/easypiechart-data.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/custom.js"></script>
+	<script>
+		window.onload = function () {
+	var chart1 = document.getElementById("line-chart").getContext("2d");
+	window.myLine = new Chart(chart1).Line(lineChartData, {
+	responsive: true,
+	scaleLineColor: "rgba(0,0,0,.2)",
+	scaleGridLineColor: "rgba(0,0,0,.05)",
+	scaleFontColor: "#c5c7cc"
+	});
+};
+	</script>
+		
+</body>
+</html>

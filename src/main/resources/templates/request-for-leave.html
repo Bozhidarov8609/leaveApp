@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/datepicker3.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">Request</div>
+            <div class="panel-body">
+                <form th:method="POST" th:action="@{/leave/request}" th:object="${leaveRequestBindingModel}">
+                    <small th:if="${notEnoughDays}"  class="text-danger">Not enough days</small>
+                    <small th:if="${notToBeInThePast}"  class="text-danger">Start and End day cannot be in the past</small>
+                    <div class="row">
+
+                        <div class="form-group">
+                            <label class="label" for="startDay">Start Day</label>
+                            <input th:field="*{startDay}"
+                                   th:classappend="${#fields.hasErrors('startDay')}? 'is-invalid'"
+                                   th:value="*{startDay}" id="startDay" class="form-control" placeholder="startDay" name="startDay"
+                                   type="date" autofocus="">
+                            <small th:if="${#fields.hasErrors('startDay')}" class="text-danger"
+                                   th:errors="*{startDay}"></small>
+                        </div>
+                        <div class="form-group">
+                            <label class="label" for="endDay">End Day</label>
+                            <input th:field="*{endDay}"
+                                   th:classappend="${#fields.hasErrors('endDay')}? 'is-invalid'"
+                                   th:value="*{endDay}" id="endDay" class="form-control" placeholder="End Day" name="endDay"
+                                   type="date" autofocus="">
+                            <small th:if="${#fields.hasErrors('endDay')}" class="text-danger"
+                                   th:errors="*{endDay}"></small>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" value="submit" class="btn btn-primary">
+                                <div class="submitting"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.col-->
+</div><!-- /.row -->
+
+
+<script src="/js/jquery-1.11.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

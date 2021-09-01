@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/fragment :: head">
+
+</head>
+<body >
+<div  >
+	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+
+		</div><!-- /.container-fluid -->
+	</nav>
+	<small th:if="${myAl}"  class="text-danger" th:value="'List is empty'" th:text="'List is empty'">List is empty</small>
+	<div class="panel-body articles-container" th:method="GET" th:each="l : ${myAllLeave}" th:object="${l}">
+		<div class="article border-bottom">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-2 col-md-2 date">
+						<div  th:text="'Start day: '+ *{startDay}"></div>
+						<div  th:text="'End day: '+ *{endDay}"></div>
+
+					</div>
+					<div class="col-xs-10 col-md-10">
+						<h4  th:text="''+*{user.firstName} +' '+*{user.lastName}"></h4>
+						<p th:text="'Job possition: '+*{user.getJobPosition()} "></p>
+						<p th:text="'Total Days Leave: '+*{days} +' days'"></p>
+					</div>
+
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div><!--End .article-->
+
+
+	</div>
+		
+
+		<div class="row">
+			<div class="col-md-12">
+
+			</div>
+		</div><!--/.row-->
+		
+
+		
+
+	</div>	<!--/.main-->
+	
+	<script src="/js/jquery-1.11.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/chart.min.js"></script>
+	<script src="/js/chart-data.js"></script>
+	<script src="/js/easypiechart.js"></script>
+	<script src="/js/easypiechart-data.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/custom.js"></script>
+	<script>
+		window.onload = function () {
+	var chart1 = document.getElementById("line-chart").getContext("2d");
+	window.myLine = new Chart(chart1).Line(lineChartData, {
+	responsive: true,
+	scaleLineColor: "rgba(0,0,0,.2)",
+	scaleGridLineColor: "rgba(0,0,0,.05)",
+	scaleFontColor: "#c5c7cc"
+	});
+};
+	</script>
+		
+</body>
+</html>

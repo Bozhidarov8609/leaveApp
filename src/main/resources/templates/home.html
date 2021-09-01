@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/fragments/fragment :: head">
+
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar" th:object="${user}">
+        <div class="profile-sidebar">
+
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name" th:text="${user.firstName}+' '+ ${user.lastName}">LeaveApp</div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="divider"></div>
+        <ul class="nav menu">
+            <li>
+                <div>
+                    <em class="fa fa-xl fa-users color-teal"></em>
+                    <a th:href="@{/users/profile/(id=*{id})}">My Profile</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <em class="fa fa-calendar">&nbsp;</em>
+                    <a th:href="@{/users/myLeave/(id=*{id})}">List of My Leave</a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <em class="fa fa-calendar">&nbsp;</em>
+                    <a th:href="@{/leave/request}">Request for leave</a>
+                </div>
+            </li>
+            <li sec:authorize="hasRole('ROLE_MANAGER')">
+                <div>
+                    <em class="fa fa-calendar">&nbsp;</em>
+                    <a th:href="@{/users/all}">List of All Employees</a>
+                </div>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <div>
+                <em class="fa fa-calendar">&nbsp;</em>
+                <a href="users/register">Register new Employee</a>
+            </div>
+            </li>
+            <li>
+                <form th:action="@{/users/logout}" method="POST">
+                    <em class="fa fa-power-off">&nbsp;</em>
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#">
+                <em class="fa fa-home"></em>
+            </a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+        </div>
+    </div><!--/.row-->
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+    <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default articles">
+                    <div class="panel-heading">
+                        All Not Approved Leave
+                        <ul class="pull-right panel-settings panel-button-tab-right">
+
+                        </ul>
+                    </div>
+
+                    <div class="panel-body articles-container" th:method="GET" th:each="l : ${notApprovedLeave}"
+                         th:object="${l}">
+                        <div class="article border-bottom">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-2 date">
+                                        <div th:text="'Start day: '+ *{startDay}"></div>
+
+                                    </div>
+                                    <div class="col-xs-10 col-md-10">
+                                        <h4><a th:href="@{/users/profile/(id=*{user.getId()})}"
+                                               th:text="''+*{user.firstName} +' '+*{user.lastName}">Lorem ipsum dolor
+                                            sit amet</a></h4>
+                                        <p th:text="'Total Days Leave: '+*{days} +' days'"></p>
+                                    </div>
+                                    <div>
+
+                                        <a th:href="@{/leave/chahgeStatus/{id}(id= *{id})}"
+                                           class="btn btn-primary d-block px-2 py-3">Approve</a>
+
+                                        <a th:href="@{/leave/delete/{id}(id= *{id})}"
+                                           class="btn btn-primary d-block px-2 py-3">Disapprove</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div><!--End .article-->
+
+
+                    </div>
+
+                </div><!--End .articles-->
+
+
+            </div><!--/.col-->
+
+            <div class="col-md-6">
+                <div class="panel panel-default articles">
+                    <div class="panel-heading">
+                        All Approved Leave
+                        <ul class="pull-right panel-settings panel-button-tab-right">
+
+                        </ul>
+                    </div>
+
+                    <div class="panel-body articles-container" th:method="GET" th:each="l : ${approvedLeave}"
+                         th:object="${l}">
+                        <div class="article border-bottom">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-2 date">
+                                        <div th:text="'Start day: '+ *{startDay}"></div>
+                                        <div th:text="'End day: '+ *{endDay}"></div>
+
+                                    </div>
+                                    <div class="col-xs-10 col-md-10">
+                                        <h4 th:text="''+*{user.firstName} +' '+*{user.lastName}"></h4>
+                                        <p th:text="'Job possition: '+*{user.getJobPosition()} "></p>
+                                        <p th:text="'Total Days Leave: '+*{days} +' days'"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div><!--End .article-->
+
+
+                    </div>
+
+                </div><!--End .articles-->
+
+
+            </div><!--/.col-->
+
+        </div>
+    </th:block>
+</div>    <!--/.main-->
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/chart.min.js"></script>
+<script src="js/chart-data.js"></script>
+<script src="js/easypiechart.js"></script>
+<script src="js/easypiechart-data.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    window.onload = function () {
+        var chart1 = document.getElementById("line-chart").getContext("2d");
+        window.myLine = new Chart(chart1).Line(lineChartData, {
+            responsive: true,
+            scaleLineColor: "rgba(0,0,0,.2)",
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleFontColor: "#c5c7cc"
+        });
+    };
+</script>
+
+</body>
+</html>

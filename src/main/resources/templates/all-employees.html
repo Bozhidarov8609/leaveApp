@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragments/fragment :: head">
+
+</head>
+<body>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+    <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default articles">
+
+                    <div class="panel-heading">
+                        All Employees
+                        <ul class="pull-right panel-settings panel-button-tab-right">
+
+                        </ul>
+                    </div>
+                    <div class="panel-body articles-container" th:method="GET" th:each="u : ${allEmployees}"
+                         th:object="${u}">
+                        <div class="article border-bottom">
+                            <div class="col-xs-12">
+                                <div class="row">
+
+                                    <div class="col-xs-10 col-md-10">
+                                        <h4
+                                               th:text="''+*{firstName} +' '+*{lastName}">Lorem ipsum dolor
+                                            sit amet</h4>
+                                        <p th:text="'Total Days Leave: '+*{totalDaysLeave} +' days'"></p>
+                                        <p th:text="'Job Possition: '+*{jobPosition}"></p>
+                                        <p th:text="'Email: '+*{email}"></p>
+                                        <p th:text="'Date of Appointment: '+*{dateOfAppointment}"></p>
+                                    </div>
+                                    <div>
+
+                                        <a th:href="@{/users/delete/{id}(id= *{id})}"
+                                           class="btn btn-primary d-block px-2 py-3">Delete Employee from List
+                                        </a>
+                                        <a th:href="@{/users/changeRole/{id}(id= *{id})}"
+                                           class="btn btn-primary d-block px-2 py-3">Change Role
+                                        </a>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div><!--End .article-->
+
+
+                    </div>
+
+                </div><!--End .articles-->
+
+
+            </div><!--/.col-->
+
+
+
+        </div>
+    </th:block>
+</div>
+
+<script src="/js/jquery-1.11.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/chart.min.js"></script>
+    <script src="/js/chart-data.js"></script>
+    <script src="/js/easypiechart.js"></script>
+    <script src="/js/easypiechart-data.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/custom.js"></script>
+    <script>
+        window.onload = function () {
+            var chart1 = document.getElementById("line-chart").getContext("2d");
+            window.myLine = new Chart(chart1).Line(lineChartData, {
+                responsive: true,
+                scaleLineColor: "rgba(0,0,0,.2)",
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleFontColor: "#c5c7cc"
+            });
+        };
+    </script>
+
+</body>
+</html>
